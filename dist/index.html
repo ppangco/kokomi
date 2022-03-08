@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  <link href="https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Dancing+Script&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.3.15/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+    body {
+      background-color: #fab7df;
+    }
+    img {
+      max-width: 100%
+    }
+    h1, h2 {
+      font-family: 'Dancing Script';
+      color:#8b406d
+    }
+    h3 {
+      font-family: 'Annie Use Your Telescope';
+      color: #4e4c91;
+      font-weight: bold;
+      font-size: 1.5em;
+    }
+
+  </style>
+  <title>Kokomi</title>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <v-app>
+
+      <v-app-bar app flat color="#aaa8f5">
+        <v-tabs centered v-model="tab" color="secondary" mobile-breakpoint="sm" show-arrows>
+          <v-tab v-for="link in links" :key="link">
+            {{ link }}
+          </v-tab>
+        </v-tabs>
+      </v-app-bar>
+  
+      <v-main style="background-color: #fab7df;">
+        <component :is="links[tab]"></component>
+      </v-main>
+
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.3.15/dist/vuetify.min.js"></script>
+  <script>
+
+    Vue.component('Home', {
+      template: `
+      <v-container>
+        <h1>Kokomi</h1>
+        <img src="Character_Sangonomiya_Kokomi_Portrait.png" style="max-height: 100vh">
+      </v-container>
+      `
+    });
+
+    Vue.component('Overview', {
+      template: `
+      <v-container class="pa-4">
+        <h1>Overview</h1>
+
+        <section class="my-4">
+          <h2>Pros</h2>
+          <ul>
+            <li>Healing (you become basically immortal with her in the team)</li>
+            <li>Can heal and do damage with the same build</li>
+            <li>Free sub-DPS (with clam)</li>
+            <li>Buffing (TToDS, 4p ToM)</li>
+            <li>Off and on field hydro application</li>
+            <li>On field driver</li>
+            <li>Tank</li>
+          </ul>
+
+          <h2>Cons</h2>
+          <ul>
+            <li>Team reliant as DPS</li>
+            <li>Burst reliant as DPS</li>
+            <li>ER issues</li>
+            <li>No viable nuke builds (they do exist, but are not worth using in any scenario outside screenshots)</li>
+          </ul>
+        </section>
+
+        <v-divider></v-divider>
+        
+        <section class="my-4">
+          <h2>Misconceptions</h2>
+
+          <h3>• She deals no damage</h3>
+          <p>Her damage during burst is actually comparable to Childe’s, having an average of 5-7k auto attacks with raw damage. With buffs (no food, only teammates), it can easily pass 10k and potentially reach 20k. A vape DPS Kokomi can potentially deal 70k with charged attacks, though this build is not recommended. The best and easiest build is 4p clam, and besides the hydro damage, she can deal 20k+ clam damage during burst (with hydro dmg cup) and 10-12k damage with skill outside burst (hp cup deals more damage and is more valuable as a support). What puts them apart in terms of damage is Childe’s notorious nuke burts. All those values take into consideration a C0 Kokomi with high level talents.</p>
+          <h3>• She only has high usage on abyss for having low ownership (and the only people who pulled for her love her)</h3>
+          <p>While it’s true that the abyss data that many people used as reference for a good team or character is misleading (a problem that has been recently addressed in the community), the discussion also brought wrong conclusions. Some people have been using this as a way to “debunk” Kokomi being useful in the abyss, so if we follow that logic, characters such as Yoimiya (who was also bashed pre and post release and has low ownership) should have high usage in the abyss, but that’s not what happened. There are a handful of 5* characters that have low ownership, but equally low usage; the best comparison to Kokomi would likely be Kazuha: both of them were bashed pre release and titled a “5* version of x 4* character”, and later become popular in the abyss. Now, I don’t mean that Kokomi is as valuable as Kazuha, he is still a lot more universal, but her utility is not neglectable. Also, support characters tend to have better longevity than DPS characters.</p>
+          <h3>• She’s easily replaceable</h3>
+          <p>I made a few comparisons in the next section specifically to show how Kokomi is not just a replacement, but rather has her own value that sets her apart from other unities. None of those comparisons are meant to show why she is better or why you should pull for her, they are meant solely to analyze her utilities and optimal roles. The characters listed can still be used instead of Kokomi in some comps if you so prefer, even if she were technically more effective.<p>
+        </section>
+
+      </v-container>
+      `
+    });
+
+    Vue.component('Comparisons', {
+      template: `
+      <v-container>
+        <h1>Comparisons</h1>
+
+        <v-expansion-panels class="my-4">
+          <v-expansion-panel v-for="character of characters" style="background-color: #a2cefa">
+            <v-expansion-panel-header>
+              <h3>{{ character.name }} x Kokomi</h3>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <h4>Similarities</h4>
+                {{ character.similarities }}
+              <h4>{{ character.name }}'s pros</h4>
+                {{ character.pros }}
+              <h4>Kokomi's pros</h4>
+                {{ character.kokomi }}
+              <h4>Conclusion</h4>
+                {{ character.conclusion }}
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+
+      </v-container>
+      `,
+      data: () => ({
+        characters: [
+          {
+            name: 'Barbara',
+            similarities: 'Both can, to some extent, fulfill the same roles (with varying effectiveness): can hold TToDS and make full use of it (even though most people must have it at lv1), can use 4p clam, can work on and off-field, are safe on field drivers, have ER issues.',
+            pros: 'FREE, can revive with C6 (something that, contrary to popular belief, many people do not have), buffs hydro dmg bonus for the active character at C2 (not that adding her to the team for this sole purpose is ever recommended), heals instantly with burst, skill is not stationary, strong vape DPS.',
+            kokomi: 'Can heal and do damage with the same build, deals more damage as a hydro driver in a taser comp than Barbara, skill heals more and doesn’t freeze you (aside from casting), skill has big hydro application aoe (better for off field freeze support), high resistance to interruption during burst, capable of 100% skill uptime, can use 4p ToM.',
+            conclusion: 'Both heal just fine. Barbara can be better in specific circumstances for being able to heal instantly without taking field time, as well as not needing low hp characters to stay on field (though it’s worth mentioning that Kokomi doesn’t need burst to heal, as long as you can keep other characters on field). Barbara can also work as a buffer, but Kokomi offers more options and has many more utilities. Barbara is rarely recommended in a comp if you have any other option, while Kokomi is a solid pick for many teams.'
+          },
+          {
+            name: 'Childe',
+            similarities: 'Enable reverse vaporize while on field (aka Xiangling).',
+            pros: 'Despite having comparable damage, Childe has nuke burst damage on top of that, and has more hydro application.',
+            kokomi: 'Has more consistent damage, her C1 applies hydro faster than Childe, can heal and tank (safer on field).',
+            conclusion: 'In terms of damage, Childe is a better pick in the typical reverse vape team, but they generally have different team comps—Kokomi is mostly used in taser and freeze, opening different possibilities by fulfilling the role of a healer herself.'
+          },
+          {
+            name: 'Mona',
+            similarities: 'Stationary skill that applies hydro and has unreliable energy generation, can hold TToDS, Prototype Amber, 4p ToM.',
+            pros: 'Burst has bigger damage (although her nuke potential only shows on vape, becoming quite underwhelming in her main role in freeze teams), her kit offers buff for other characters, skill is a taunt.',
+            kokomi: 'Reliable healer, can make full use of Prototype Amber, TToDS and 4p ToM, applies hydro faster, can tank, can make continuous off field damage with clam + skill (not burst reliant as support).',
+            conclusion: 'Both have solid spots in freeze teams. While you can use Mona as a healer, it’s not as safe as using Kokomi. By using Kokomi, you may miss a bit on buffs, but it opens a spot for another cryo DPS. Outside of freeze teams, Kokomi generally has more utility than Mona. Alternatively, you can use them together in a mono hydro team.'
+          },
+          {
+            name: 'Xingqiu',
+            similarities: 'Apply a lot of hydro, good enablers, provide damage, reliant on high burst cost, help you stay alive (Xingqiu has small healing, but more importantly, a reduction of damage taken).',
+            pros: 'Better off field enabler, is mobile and ranged, can battery himself and other hydros, C2 has hydro resistance shred, nuke skill (with vaporize), useful utility passive.',
+            kokomi: 'Can work as on and off field enabler (although not as effectively off field), hydro application off field isn’t restricted to auto attacks, can hold TToDS, actual healer, tank, easier name to pronounce.',
+            conclusion: 'They can have interchangeable roles for lack of better options when one is not available, but overall they have very different utilities. Kokomi is usually a better pick in freeze teams. For vape and taser, while serving the same utility, their roles are different: Kokomi is preferable on field and Xingqiu off field. Which of them to use depends on what characters you’re pairing them with. Alternatively, you can pair them and Xingqiu will serve as battery and buffer for Kokomi, or both can work together as enablers.'
+          },
+          {
+            name: 'Zhongli',
+            similarities: 'Comfort of life, immortal team, tank, buffer, burst neglectable as support, easy to build.',
+            pros: 'No interruption for other characters, nuke burst (with a good build focused on damage, which requires a lot of investment), doesn’t mess reactions, doesn’t heal (Hu Tao)—unless you have C6.',
+            kokomi: 'Good on field driver, easy to build for damage, free sub dps with clam, good at reaction comps.',
+            conclusion: 'Although having a similar feel, they have very different utilities. Zhongli is better in mono teams and paired with DPS characters that don’t synergize with healers or are easily interrupted. Kokomi, on the other hand, is a much better pick for most reaction teams. Basically, they don’t have interchangeable spots in the majority of their teams.'
+          },
+          {
+            name: 'Qiqi',
+            similarities: 'Can heal with both skill and burst, heal all characters while taking field time, can use 4p clam, good at crossing water.',
+            pros: 'You probably have several constellations, half of a cryo resonance, can run favonius weapon, skill is not stationary.',
+            kokomi: 'Contributes more as on field driver, better pick in freeze teams (has good elemental application off field and doesn’t require burst as a support, while Qiqi, who also has burst issues, is outperformed by Diona, who is a battery), can hold TToDS and 4p ToM effectively.',
+            conclusion: 'Kokomi is a lot more flexible than Qiqi, mostly for being a hydro catalyst, but they are essentially very similar when running 4p clam off field.'
+          }
+        ]
+      })
+    });
+
+    Vue.component('Teams', {
+      template: `
+      <v-container>
+        <h1>Teams</h1>
+
+        <section v-for="team of teams" key="team.name" class="my-4">
+          <h2>{{ team.name }}</h2>
+          <v-subheader>{{ team.summary.members }}</v-subheader>
+          <p>{{ team.summary.description }}</p>
+          <v-expansion-panels class="my-4">
+            <v-expansion-panel v-for="variant of team.variants" style="background-color: #a2cefa">
+              <v-expansion-panel-header>
+                <h3>{{ variant.members }}</h3>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content style="white-space: pre-line">
+                <div v-html="variant.description"></div>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+          <v-divider></v-divider>
+        </section>
+
+      </v-container>
+      `,
+      data: () => ({
+        teams: [
+          {
+            name: 'Electro-charged',
+            summary: {
+              members: 'Kokomi * electro * electro * anemo',
+              description: 'Kokomi can be on-field DPS, Sub-DPS or off-field support. Double electro isn’t obligatory, but resonance generates more electro particles with reactions. Anemo for resistance shred with 4p VV.\nOne electro or anemo can be replaced with a hydro character (hydro resonance helps Kokomi dmg with 4p clam), double anemo (anemo resonance gives speed and shorter CD) or geo (albedo for sub-dps, yunjin for normal attacks buff and speed with c6, zhongli for shield, 4p ToM and elemental dmg buff).'
+            },
+            variants: [
+              {
+                members: 'Kokomi * Fischl * Beidou/Yae/Lisa * Sucrose',
+                description: 'Most popular variant uses Fischl and Beidou, but now with Yae she’s being a popular replacement. Fischl is favorable for being a battery, but any off field electro works if you can manage ER. Sucrose can buff EM for the team, but she can be replaced by other anemos (Kazuha for Elemental DMG buff or Venti for ER).\nKokomi can run 4p clam with hp/hydro dmg/healing bonus (on field) or hp/hp/healing bonus (off field or on field with Kazuha). She can also make use of 4p ToM on and off field. Best weapons are Moonglow, Prototype Amber and Hakushin Ring.'
+              },
+              {
+                members: 'Kokomi * Raiden * electro * anemo',
+                description: 'Similar to the first team, with Raiden acting as a battery, making any other off field electro an option (except Beidou). Raiden and Kokomi will either have split field time or Kokomi will be mostly off field. Best anemo options are Kazuha and Sucrose.\nSame builds.'
+              },
+              {
+                members: 'Kokomi * Xingqiu * electro * electro/anemo',
+                description: 'Same idea as first team, but focused on on field Kokomi that lacks ER. Xingqiu provides battery, hydro shred with C2 and some extra off field dmg.\n4p ToM is still viable, but 4p clam is preferable depending on how much dmg your other characters deal. You have a cracked Beidou? Go for 4p ToM. You half built your electros just to make a taser team? 4p clam with hp/hydro dmg/healing circlet is probably a better option.'
+              },
+              {
+                members: 'Kazuha * Kokomi * Fischl * anemo',
+                description: 'So you lost the 50/50 for c1 Kazuha, or just want to troll people with your build showcase? Presenting: 4 Thundering Fury Kazuha! In this <s>meme</s> team, Kokomi plays the role of an off field hydro applier and healer, while Fischl applies electro from off field, allowing Kazuha to spam his skill like a budget Xiao. Add another anemo for more cooldown reduction and Viridescent Venerer, or add an off field dps. <strong>Sucrose</strong> is a great option to buff EM. <strong>Xingqiu</strong> or <strong>Beidou</strong> can provide a lot of off field damage, but you will have to remember to normal attack.\n<strong>Kazuha</strong> !!!4 Thundering Fury!!! Aim for EM/EM/EM for electro-charged damage.\n<strong>Kokomi</strong> 4p clam.'
+              },
+              {
+                members: 'Kokomi * Fischl * Kazuha * Albedo',
+                description: 'Using Albedo burst gives 125 EM to all party members, which will not only enhance the reactions but also make Kazuha’s elemental dmg buff bigger, buffing both hydro and electro further. Downside of this team is that Kokomi doesn’t have a battery, so ER requirements are higher.\n4p clam is the best option for Kokomi, and she can run both hp and hydro cup. Best weapons are Moonglow and Prototype Amber.'
+              }
+            ]
+          },
+          {
+            name: 'Superconduct',
+            summary: 
+            {
+              members: 'Kokomi * electro * cryo',
+              description: ''
+            },
+            variants: [
+              {
+                members: 'Kokomi * Fischl * Rosaria',
+                description: 'This team was made to enhance 4p clam dmg with on field dps Kokomi. You can use any off field cryo and electro as long as you have ER. Rosaria is preferable at C6 for 20% phys RES shred. Fourth spot can be an anemo, battery (Xingqiu or Diona) or extra electro. Hydro resonance also helps maxing clam bubble damage.\nKokomi will be using 4p clam, generally with hydro cup. Rosaria is best holding favonius lance.'
+              }
+            ]
+          },
+          {
+            name: 'Vape enabler',
+            summary: {
+              members: 'Kokomi * pyro DPS',
+              description: 'On field Kokomi version is a lot better; the off field version is not as optimal, seeing as she can’t do fast enough hydro off field application for vaporize.'
+            },
+            variants: [
+              {
+                members: 'Kokomi * Xiangling * Bennett',
+                description: 'Kokomi will be on field enabler, and can be either focused on supporting Xiangling or dealing dmg herself as well. Bennett’s burst will buff Xiangling’s pyronado and he will also act as a battery for her. Fourth spot is best occupied by Sucrose for EM buff or Kazuha for elemental dmg buff, both using 4p VV. Anemo or Bennett can be swapped for hydro battery (Xingqiu) or off-field geo (Albedo as sub-dps or Yun Jin for buffing Kokomi).\nKokomi can use 4p ToM or 4p clam. Weapons can be Moonglow, Protype Amber or ttods. Sucrose can also hold ttods, otherwise she’ll use Sacrificial Fragments. One or two Favonius weapons is preferable.'
+              },
+              {
+                members: 'Diluc/Klee * Kokomi * Kazuha',
+                description: 'For when you don’t have Xingqiu available. Jellyfish doesn’t have fast enough hydro application, so Kazuha burst can swirl hydro to optimize it.\nKokomi will be off field, so best builds are 4p ToM or 4p clam with hp cup, as well as ttods. Kazuha will need a lot of ER or Sucrose for battery.'
+              }
+            ]
+          },
+          {
+            name: 'Vape DPS',
+            summary: {
+              members: '',
+              description: ''
+            },
+            variants: [
+              {
+                members: 'Kokomi * Xiangling * Bennett * Sucrose',
+                description: 'Hard team to use. Kokomi will only be doing charged attacks and triggering reactions herself, making the use of jellyfish not recommended. Bennett is not as important, but still helpful. Make sure to infuse your anemo’s ult with pyro, not hydro. Sucrose is the best pick for the easy EM buff for the whole party. Alternatively, you can use Kazuha instead of Xiangling, but the pyro application from his burst is not as effective.\nThis team requires a lot of ER, so one or two favonius weapons should be best, as Kokomi will need her burst up all the time and will not have a hydro battery.\nBest Kokomi build is 4p wanderer with EM/hydro dmg/healing bonus, with Skyward Atlas, Dodoco Tales, Mappa Mare or Prototype Amber.'
+              }
+            ]
+          },
+          {
+            name: 'Freeze support',
+            summary: {
+              members: 'cryo DPS * Kokomi * anemo * cryo support',
+              description: ''
+            },
+            variants: [
+              {
+                members: 'Ayaka * Kokomi * Kazuha * Rosaria/Shenhe',
+                description: 'Kokomi is off field support and uses her burst solely for jellyfish refresh.\nCan use 4p ToM or 4p clam with hp cup. Best weapon is ttods for buffing Ayaka, but Moonglow and Prototype Amber are also options.'
+              },
+              {
+                members: 'Ganyu * Kokomi * Venti * cryo support',
+                description: 'For when you want to use Morgana but don’t have Mona. Same build as previous team.'
+              },
+              {
+                members: 'Ayaka * Ganyu * Kokomi * anemo',
+                description: 'For when you have both Ayaka and Ganyu and want to make an overkill team. Same builds as well.'
+              }
+            ]
+          },
+          {
+            name: 'On-field freeze',
+            summary: {
+              members: 'Kokomi * off field cryo',
+              description: 'Not optimal with Ganyu and Ayaka freeze teams, seeing as they generally deal more dmg on field than Kokomi, but still possible to use.'
+            },
+            variants: [
+              {
+                members: 'Kokomi * Kaeya * Rosaria',
+                description: 'For when you really want to use freeze but don’t have Ganyu or Ayaka. Also simp so hard you want Kokomi on field. Fourth character can be an anemo (best option being Kazuha), Xingqiu for battery, or Shenhe—or someone else that won’t cause shatter or mess reactions.\n4p clam is the best option.'
+              }
+            ]
+          },
+          {
+            name: 'Mono hydro',
+            summary: {
+              members: '',
+              description: ''
+            },
+            variants: [
+              {
+                members: 'Kokomi * Xingqiu * Mona * yunjin/c2 jean/anemo',
+                description: 'Buff your Kokomi team, in which everyone contributes for impressive whale damage without the whaling part (even though constellations do make this team better, but are not required). Both Kokomi and Mona have burst issues, but Xingqiu with sacrificial sword is enough to charge everyone. Xingqiu C2 lowers the enemies hydro resistance while Mona even at c0 provides a damage bonus buff. The last spot is taken by another buffer, be it just an anemo for the 4p VV, C2 Jean for the attack speed buff on top of that, or Yun Jin for the normal attack buff and attack speed buff at C6.'
+              },
+              {
+                members: 'Kokomi * Xingqiu * Kazuha * Venti',
+                description: 'Burst spam with easy ER. Besides 4p VV effect, Kazuha gives hydro damage buff and Venti provides extra ER. Hydro resonance enhances 4p clam potential and anemo resonance shortens CD and gives attack speed.\nToM is not viable, seeing as only Xingqiu can significantly benefit from atk. Kokomi will also be a main damage dealer, so 4p clam is the best option.'
+              }
+            ]
+          },
+          {
+            name: 'Overload, overvape',
+            summary: {
+              members: '',
+              description: ''
+            },
+            variants: [
+              {
+                members: 'Sucrose * Kokomi * Xiangling * Fischl',
+                description: 'Also known as sukokomon. The idea is that Sucrose is a pokemon trainer with Oz, jellyfish and Guoba, except this meme became meta for the impressive damage generated by the huge amount of reactions. Although simple in concept, the execution is the complete opposite: it requires a long and specific rotation to make the max of it (a less careful rotation could potentially also work with well invested characters, but is not as impressive). Another interesting factor is that none of these characters can be replaced, but at least 3 of them are 4*.\nIn this Kokomi uses clam set, while Xiangling is also built for max damage (a good pick would be Kitain at r5—this weapon does not benefit from ER and only manages to get Xiangling’s burst back in time with high refinement).'
+              },
+              {
+                members: 'Kazuha * Kokomi * Fischl * Bennett',
+                description: 'Sukokomon for dummies (and lucky people who have both Kokomi and Kazuha). This has a similar idea, and while less effective (no guarantee that all reactions will be triggered), it’s easier to play. For this you’ll set jellyfish and Oz like in sukokomon, and also add Bennett’s burst. Kazuha is able to swirl all 3 elements, and would ideally trigger every reaction, but this is more rng. Still holds great results.'
+              },
+              {
+                members: 'Kokomi * Xiangling * Electro',
+                description: 'Another team with potential for many reactions and rng execution. The idea is simply to pair Kokomi with your best off field DPS characters, while she acts as a driver. The good thing about this team is dealing easy damage without worrying about dying.\n4p clam is recommended, but ToM can also be used if all your other characters can benefit from atk.'
+              }
+            ]
+          }
+        ]
+      })
+    });
+
+    var app = new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data: () => ({
+        links: [
+          'Home',
+          'Overview',
+          'Comparisons',
+          'Teams'
+        ],
+        tab: 'Home'
+      }),
+    });
+  </script>
+</body>
+</html>
